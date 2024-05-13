@@ -41,9 +41,7 @@ Paddle leftP;
   @Override
 	public void actionPerformed(ActionEvent e) {
     ball.advance(leftP.y,rightP.y);//Use paddles later
-    if (ball.left) {
-      leftP.advance(ball.y);
-    }
+    leftP.advance(ball.y, ball.left);
     repaint();
   }
 }

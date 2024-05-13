@@ -15,19 +15,19 @@ public class TheBall {
   public void advance(int leftP, int rightP) { //left and right are paddle coordinates
     if (y + 10 > 800 && !up) {
       up = true;
-      hits++;
     }
-    if (x + 10 > 1300 && !left) {
+    if (x + 10 > 1250 && !left) {//right Check
       left = true;
       hits++;
     }
     if (y < 0 && up) {
       up = false;
-      hits++;
     }
-    if (x < 0 && left) {
-      left = false;
-      hits++;
+    if (x < 60 && left) {//left check
+      if (y > leftP && y < leftP + 100) {
+        left = false;
+        hits++;
+      }
     }
     if (up) {
       y -= 2;
