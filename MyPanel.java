@@ -42,14 +42,14 @@ int textY;
   g2D.fillRect(1250, rightP.y, 10, 100);//Right paddle
   g2D.fillRect(50, leftP.y, 10, 100);//Left paddle
   g2D.setFont(new Font("Comic Sans MS",Font.BOLD,25));
-  g2D.drawString("X: " + ball.x,5,30);
+  /*g2D.drawString("X: " + ball.x,5,30);
   g2D.drawString("Y: " + ball.y,5,60);
   g2D.drawString("Up: " + ball.up,5,90);
   g2D.drawString("Left: " + ball.left,5,120);
   g2D.drawString("Hits: " + ball.hits,5,150);
   g2D.drawString("Speed: " + ball.speed,5,180);
   g2D.drawString("Increase: " + ball.increase,5,210);
-  g2D.drawString("move: " + move,5,240);
+  g2D.drawString("move: " + move,5,240);*/
   if (text > 0) {
     g2D.drawString("plonk",textX,textY);
     text--;
