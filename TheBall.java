@@ -23,6 +23,7 @@ public class TheBall {
   public void advance(int leftP, int rightP) { //left and right are paddle coordinates
     if (y + 10 > 800 && !up) {
       up = true;
+      beenHit = true;
     }
     if (x + 10 > 1250 && !left) {//right Check
       if (y > rightP && y < rightP + 100) {
@@ -34,6 +35,7 @@ public class TheBall {
     }
     if (y < 0 && up) {
       up = false;
+      beenHit = true;
     }
     if (x < 60 && left) {//left check
       if (y > leftP && y < leftP + 100) {

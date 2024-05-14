@@ -53,6 +53,11 @@ int textY;
   if (text > 0) {
     g2D.drawString("plonk",textX,textY);
     text--;
+    if (ball.left) {
+      textX--;
+    } else {
+      textX++;
+    }
   }
   if (lost) {
     g2D.setFont(new Font("Comic Sans MS",Font.BOLD,75));
@@ -76,11 +81,15 @@ int textY;
       }
       if (ball.beenHit) {
         text = 50;
-        textY = ball.y;
         if (ball.left) {
           textX = ball.x - 50;
         } else {
           textX = ball.x;
+        }
+        if (ball.up) {
+          textY = ball.y;
+        }else {
+          textY = ball.y + 25;
         }
         ball.beenHit = false;
       }
