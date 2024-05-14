@@ -8,6 +8,11 @@ Timer timer;
 TheBall ball;
 Paddle rightP;
 Paddle leftP;
+int move;
+boolean lost;
+int text;
+int textX;
+int textY;
  
  MyPanel(){
   
@@ -18,6 +23,11 @@ Paddle leftP;
   ball = new TheBall();
   rightP = new Paddle();
   leftP = new Paddle();
+  lost = false;
+  textX = 0;
+  textY = 0;
+  move = 0; //0 = not moving, 1 = up, 2 = down
+  text = 0;
  }
  
  public void paint(Graphics g) {
@@ -37,11 +47,49 @@ Paddle leftP;
   g2D.drawString("Up: " + ball.up,5,90);
   g2D.drawString("Left: " + ball.left,5,120);
   g2D.drawString("Hits: " + ball.hits,5,150);
+  g2D.drawString("Speed: " + ball.speed,5,180);
+  g2D.drawString("Increase: " + ball.increase,5,210);
+  g2D.drawString("move: " + move,5,240);
+  if (text > 0) {
+    g2D.drawString("plonk",textX,textY);
+    text--;
+  }
+  if (lost) {
+    g2D.setFont(new Font("Comic Sans MS",Font.BOLD,75));
+    g2D.drawString("GAME OVER",425,400);
+  }
  }
   @Override
 	public void actionPerformed(ActionEvent e) {
-    ball.advance(leftP.y,rightP.y);//Use paddles later
-    leftP.advance(ball.y, ball.left);
+    if (!lost) {
+      ball.advance(leftP.y,rightP.y);//Use paddles later
+      leftP.advance(ball.y, ball.left);
+      if (move == 1) {
+        rightP.y -= 3;
+      } else if (move == 2) {
+        rightP.y += 3;
+      }
+      if (rightP.y + 100 > 800) {
+          rightP.y = 700;
+        } else if (rightP.y < 0) {
+          rightP.y = 0;
+      }
+      if (ball.beenHit) {
+        text = 50;
+        textY = ball.y;
+        if (ball.left) {
+          textX = ball.x - 50;
+        } else {
+          textX = ball.x;
+        }
+        ball.beenHit = false;
+      }
+    }
+    if (ball.x > 1300 && !lost) {
+      lost = true;
+    } else if (ball.x < 0 && !lost) {
+      lost = true;
+    }
     repaint();
   }
 }

@@ -1,24 +1,36 @@
 public class TheBall {
   int x;
   int y;
+  int speed;
+  int increase;
+  int lastIncrease;
   boolean up;
   boolean left;
   int hits;
+  boolean beenHit;
 
   TheBall() {
-    x = 100;
-    y = 100;
+    x = 650;
+    y = 400;
+    speed = 2;
+    increase = 1;
+    lastIncrease = 0;
     up = false;
     left = false;
     hits = 0;
+    beenHit = false;
   }
   public void advance(int leftP, int rightP) { //left and right are paddle coordinates
     if (y + 10 > 800 && !up) {
       up = true;
     }
     if (x + 10 > 1250 && !left) {//right Check
-      left = true;
-      hits++;
+      if (y > rightP && y < rightP + 100) {
+        left = true;
+        hits++;
+        increase--;
+        beenHit = true;
+      }
     }
     if (y < 0 && up) {
       up = false;
@@ -27,6 +39,8 @@ public class TheBall {
       if (y > leftP && y < leftP + 100) {
         left = false;
         hits++;
+        increase--;
+        beenHit = true;
       }
     }
     if (up) {
@@ -35,9 +49,14 @@ public class TheBall {
       y += 2;
     }
     if (left) {
-      x -= 2;
+      x -= speed;
     } else {
-      x += 2;
+      x += speed;
+    }
+    if (increase <= 0) {
+      speed++;
+      increase = lastIncrease + 2;
+      lastIncrease = increase;
     }
   }
 }
