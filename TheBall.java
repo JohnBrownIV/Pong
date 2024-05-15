@@ -11,11 +11,15 @@ public class TheBall {
 
   TheBall() {
     x = 650;
-    y = 400;
+    y = (int) (Math.random() * 800);;
     speed = 2;
     increase = 1;
     lastIncrease = 0;
-    up = false;
+    if (y < 400) {
+      up = false;
+    } else {
+      up = true;
+    }
     left = false;
     hits = 0;
     beenHit = false;
