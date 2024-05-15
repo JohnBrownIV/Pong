@@ -17,10 +17,6 @@ int binary[][];
 int binaryUpdate;
 int message;
 int phase;
-int loc;
-boolean locDirect;
-private ImageIcon base;
-private ImageIcon center;
  
  MyPanel(){
   
@@ -34,17 +30,11 @@ private ImageIcon center;
   lost = false;
   textX = 0;
   textY = 0;
-  phase = 2;
+  phase = 0;
   message = 0;
-  locDirect = false;
-  loc = 0;
   move = 0; //0 = not moving, 1 = up, 2 = down
   text = 0;
   binary = new int[25][37];
-  base = new ImageIcon("Images/EyeBase.png");
-  center = new ImageIcon("Images/EyePupil.png");
-  base.setImage(base.getImage().getScaledInstance(639,243,639));
-  center.setImage(center.getImage().getScaledInstance(234,225,234));
  }
  
  public void paint(Graphics g) {
@@ -54,8 +44,6 @@ private ImageIcon center;
   
   g2D.setPaint(Color.black);
   g2D.fillRect(0, 0, 1300, 800);
-  g2D.drawImage(center.getImage(), 0 + loc, 0 + 10, null);//+200 is the center
-  g2D.drawImage(base.getImage(), 0, 0, null);
   if (phase > 0) {
     g2D.setPaint(Color.green);
     if (text > 40) {
@@ -71,23 +59,18 @@ private ImageIcon center;
         g2D.drawString("" + binary[i][x],(35 * x) + 9,35 * i);
       }
     }
-    if (text > 20 && ball.hits >= 20 && phase == 1) {
+    if (text > 20 && ball.hits >= 15 && phase > 0) {
       g2D.setFont(new Font("Times New Roman",Font.BOLD,100));
-      g2D.drawString("HELP ME", 410, 400);
-    }
-    if (phase > 1) {
-      if (loc > 280) {
-        locDirect = true;
-      } else if (loc < 120) {
-        locDirect = false;
-      }
-      if (locDirect) {
-        loc -= 3;
-      } else {
-        loc += 3;
-      }
+      g2D.drawString("PONG", 420, 400);
     }
   }
+    //Ball Tracer
+    g2D.setPaint(Color.white);
+    g2D.setStroke(new BasicStroke(3));
+    for (int i  = 0; i < ball.bounceX.size(); i ++) {
+      g2D.drawLine(ball.x + 5, ball.y + 5, ball.bounceX.get(i), ball.bounceY.get(i));//Line drawer
+    }
+    //g2D.drawLine(ball.x + 5, ball.y + 5, 0, 0);//Line drawer
   g2D.setPaint(Color.white);
   g2D.fillRect(ball.x, ball.y, 10, 10);//Ball
   g2D.fillRect(1250, rightP.y, 10, 100);//Right paddle
@@ -123,7 +106,7 @@ private ImageIcon center;
   @Override
 	public void actionPerformed(ActionEvent e) {
     if (!lost) {
-      ball.advance(leftP.y,rightP.y);//Use paddles later
+      ball.advance(leftP.y,rightP.y,phase);//Use paddles later
       leftP.advance(ball.y, ball.left);
       if (move == 1) {
         rightP.y -= 3;

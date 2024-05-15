@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 public class TheBall {
   int x;
   int y;
@@ -8,8 +9,12 @@ public class TheBall {
   boolean left;
   int hits;
   boolean beenHit;
+  ArrayList<Integer> bounceX;
+  ArrayList<Integer> bounceY;
 
   TheBall() {
+    bounceX = new ArrayList<Integer>();
+    bounceY = new ArrayList<Integer>();
     x = 650;
     y = (int) (Math.random() * 800);;
     speed = 2;
@@ -24,7 +29,7 @@ public class TheBall {
     hits = 0;
     beenHit = false;
   }
-  public void advance(int leftP, int rightP) { //left and right are paddle coordinates
+  public void advance(int leftP, int rightP, int phase) { //left and right are paddle coordinates
     if (y + 10 > 800 && !up) {
       up = true;
       beenHit = true;
@@ -48,6 +53,10 @@ public class TheBall {
         increase--;
         beenHit = true;
       }
+    }
+    if (beenHit && phase > 0) {
+      bounceX.add(x);
+      bounceY.add(y);
     }
     if (up) {
       y -= 2;
