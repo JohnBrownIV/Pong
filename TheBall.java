@@ -54,7 +54,7 @@ public class TheBall {
         beenHit = true;
       }
     }
-    if (beenHit && phase > 0) {
+    if (beenHit && phase > 1) {
       bounceX.add(x);
       bounceY.add(y);
     }

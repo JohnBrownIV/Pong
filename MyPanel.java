@@ -35,6 +35,11 @@ int phase;
   move = 0; //0 = not moving, 1 = up, 2 = down
   text = 0;
   binary = new int[25][37];
+  for (int i = 0; i < 25; i++) {
+    for (int x = 0; x < 37; x++) {
+      binary[i][x] = 2;
+    }
+  }
  }
  
  public void paint(Graphics g) {
@@ -56,7 +61,9 @@ int phase;
     g2D.setFont(new Font("Arial",Font.BOLD,35));
     for (int i = 0; i < 25; i++) {
       for (int x = 0; x < 37; x++) {
-        g2D.drawString("" + binary[i][x],(35 * x) + 9,35 * i);
+        if (binary[i][x] != 2) {
+          g2D.drawString("" + binary[i][x],(35 * x) + 9,35 * i);
+        }
       }
     }
     if (text > 20 && ball.hits >= 15 && phase > 0) {
@@ -68,7 +75,7 @@ int phase;
     g2D.setPaint(Color.white);
     g2D.setStroke(new BasicStroke(3));
     for (int i  = 0; i < ball.bounceX.size(); i ++) {
-      g2D.drawLine(ball.x + 5, ball.y + 5, ball.bounceX.get(i), ball.bounceY.get(i));//Line drawer
+      //g2D.drawLine(ball.x + 5, ball.y + 5, ball.bounceX.get(i), ball.bounceY.get(i));//Line drawer
     }
     //g2D.drawLine(ball.x + 5, ball.y + 5, 0, 0);//Line drawer
   g2D.setPaint(Color.white);
@@ -109,9 +116,9 @@ int phase;
       ball.advance(leftP.y,rightP.y,phase);//Use paddles later
       leftP.advance(ball.y, ball.left);
       if (move == 1) {
-        rightP.y -= 3;
+        rightP.y -= 4;
       } else if (move == 2) {
-        rightP.y += 3;
+        rightP.y += 4;
       }
       if (rightP.y + 100 > 800) {
           rightP.y = 700;
@@ -131,15 +138,6 @@ int phase;
           textY = ball.y + 25;
         }
         ball.beenHit = false;
-        for (int x = 0; x < 25; x++) {
-          for (int y = 0; y < 37; y++) {
-            if (binary[x][y] == 0) {
-              binary[x][y] = 1;
-            } else {
-              binary[x][y] = 0;
-            }
-          }
-        }
         if (ball.hits >= 10 && phase == 0) {
           phase = 1;
         } else if (ball.hits >= 15 && phase == 1) {
