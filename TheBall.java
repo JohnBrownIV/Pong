@@ -3,6 +3,7 @@ public class TheBall {
   int x;
   int y;
   int speed;
+  int vertSpeed;
   int increase;
   int lastIncrease;
   boolean up;
@@ -11,6 +12,7 @@ public class TheBall {
   boolean beenHit;
   ArrayList<Integer> bounceX;
   ArrayList<Integer> bounceY;
+  boolean whichSpeed;
 
   TheBall() {
     bounceX = new ArrayList<Integer>();
@@ -18,8 +20,10 @@ public class TheBall {
     x = 650;
     y = (int) (Math.random() * 800);;
     speed = 2;
+    vertSpeed = 2;
     increase = 1;
     lastIncrease = 0;
+    whichSpeed = true;
     if (y < 400) {
       up = false;
     } else {
@@ -59,9 +63,9 @@ public class TheBall {
       bounceY.add(y);
     }
     if (up) {
-      y -= 2;
+      y -= vertSpeed;
     } else {
-      y += 2;
+      y += vertSpeed;
     }
     if (left) {
       x -= speed;
@@ -69,8 +73,25 @@ public class TheBall {
       x += speed;
     }
     if (increase <= 0) {
-      speed++;
-      increase = lastIncrease + 2;
+      if (whichSpeed) {
+        speed++;
+        vertSpeed--;
+      } else {
+        vertSpeed++;
+        speed--;
+      }
+      if (speed > 5) {
+        whichSpeed = false;
+      } else if (vertSpeed > 5) {
+        whichSpeed = true;
+      }
+      if (speed < 2) {
+        speed = 2;
+      }
+      if (vertSpeed < 2) {
+        vertSpeed = 2;
+      }
+      increase = lastIncrease + 1;
       lastIncrease = increase;
     }
   }

@@ -17,6 +17,8 @@ int binary[][];
 int binaryUpdate;
 int message;
 int phase;
+Color binaryColor;
+int lineColor;
  
  MyPanel(){
   
@@ -27,13 +29,15 @@ int phase;
   ball = new TheBall();
   rightP = new Paddle();
   leftP = new Paddle();
+  binaryColor = new Color(1, 100, 1);
   lost = false;
   textX = 0;
   textY = 0;
-  phase = 0;
+  phase = 2;
   message = 0;
   move = 0; //0 = not moving, 1 = up, 2 = down
   text = 0;
+  lineColor = 0;
   binary = new int[25][37];
   for (int i = 0; i < 25; i++) {
     for (int x = 0; x < 37; x++) {
@@ -50,7 +54,7 @@ int phase;
   g2D.setPaint(Color.black);
   g2D.fillRect(0, 0, 1300, 800);
   if (phase > 0) {
-    g2D.setPaint(Color.green);
+    g2D.setPaint(binaryColor);
     if (text > 40) {
       g2D.setPaint(Color.red);
     } else if (text > 30) {
@@ -68,14 +72,27 @@ int phase;
     }
     if (text > 20 && ball.hits >= 15 && phase > 0) {
       g2D.setFont(new Font("Times New Roman",Font.BOLD,100));
-      g2D.drawString("PONG", 420, 400);
+      g2D.drawString("PONG", 480, 400);
     }
   }
     //Ball Tracer
-    g2D.setPaint(Color.white);
-    g2D.setStroke(new BasicStroke(3));
+    //g2D.setPaint(Color.white);
+    g2D.setStroke(new BasicStroke(5));
     for (int i  = 0; i < ball.bounceX.size(); i ++) {
       //g2D.drawLine(ball.x + 5, ball.y + 5, ball.bounceX.get(i), ball.bounceY.get(i));//Line drawer
+      lineColor = 255 - ((ball.bounceX.size() - i) * 3);
+      if (lineColor <= 0) {
+        lineColor = 1;
+      }
+      g2D.setPaint(new Color(255 - lineColor, lineColor, 1));
+      g2D.drawOval(ball.bounceX.get(i) - 10, ball.bounceY.get(i) - 10, 20, 20);
+      if (ball.bounceX.size() > 1) {
+        if (i < ball.bounceX.size() - 1) {
+          g2D.drawLine(ball.bounceX.get(i), ball.bounceY.get(i), ball.bounceX.get(i + 1), ball.bounceY.get(i + 1));
+        } else {
+          g2D.drawLine(ball.bounceX.get(i), ball.bounceY.get(i), ball.x + 5, ball.y + 5);
+        }
+      }
     }
     //g2D.drawLine(ball.x + 5, ball.y + 5, 0, 0);//Line drawer
   g2D.setPaint(Color.white);
@@ -114,7 +131,7 @@ int phase;
 	public void actionPerformed(ActionEvent e) {
     if (!lost) {
       ball.advance(leftP.y,rightP.y,phase);//Use paddles later
-      leftP.advance(ball.y, ball.left);
+      leftP.advance(ball.y, ball.left,ball.vertSpeed);
       if (move == 1) {
         rightP.y -= 4;
       } else if (move == 2) {

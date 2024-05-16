@@ -3,13 +3,13 @@ public class Paddle {
   Paddle() {
     y = 350;
   }
-  public void advance(int inY, boolean left) {
+  public void advance(int inY, boolean left, int speed) {
     if (left) {
       if (inY > y + 80) {
-      y += 3;
+      y += speed + 1;
       }
       if (inY < y + 20) {
-        y -= 3;
+        y -= speed + 1;
       }
       if (y + 100 > 800) {
         y = 700;
