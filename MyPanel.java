@@ -136,6 +136,9 @@ boolean twoPlayer;
   g2D.drawString("SPEED",683,15);
   g2D.drawString("" + ball.vertSpeed + " / " + ball.speed,685,30);
   g2D.drawString("NEXT: " + ball.increase,683,45);
+  if (twoPlayer) {
+    g2D.drawString("2 Players",0,15);
+  }
   if (lost) {
     g2D.setFont(new Font("Comic Sans MS",Font.BOLD,75));
     g2D.drawString("GAME OVER",425,400);

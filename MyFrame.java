@@ -33,6 +33,15 @@ public class MyFrame extends JFrame implements KeyListener{
  @Override
 	public void keyPressed(KeyEvent e) {
     //System.out.println(e.getKeyCode());
+    if (e.getKeyCode() == 27) {//Escape
+      if (twoPlayer) {
+        twoPlayer = false;
+        panel.twoPlayer = false;
+      } else {
+        twoPlayer = true;
+        panel.twoPlayer = true;
+      }
+    }
     if (!twoPlayer) {
       if (e.getKeyCode() == 87) {
         panel.move = 1;
