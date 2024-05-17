@@ -59,15 +59,17 @@ boolean lineType;
   if (phase > 0) {
     g2D.setPaint(binaryColor);
     g2D.setFont(new Font("Times New Roman",Font.BOLD,100));
-    if (text > 40) {
-      g2D.setPaint(Color.red);
-      g2D.drawString("John", 480, 400);
-    } else if (text > 30) {
-      g2D.setPaint(Color.orange);
-      g2D.drawString("Is", 480, 400);
-    } else if(text > 20) {
-      g2D.setPaint(Color.yellow);
-      g2D.drawString("Cool", 480, 400);
+    if (phase == 1 || phase == 2) {
+      if (text > 40) {
+        g2D.setPaint(Color.red);
+        g2D.drawString("John", 480, 400);
+      } else if (text > 30) {
+        g2D.setPaint(Color.orange);
+        g2D.drawString("Is", 480, 400);
+      } else if(text > 20) {
+        g2D.setPaint(Color.yellow);
+        g2D.drawString("Cool", 480, 400);
+      }
     }
     g2D.setFont(new Font("Arial",Font.BOLD,35));
     for (int i = 0; i < 25; i++) {
