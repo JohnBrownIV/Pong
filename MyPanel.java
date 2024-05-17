@@ -8,6 +8,7 @@ Timer timer;
 TheBall ball;
 Paddle rightP;
 Paddle leftP;
+DvdLogo logo;
 int move;
 int move2;
 boolean lost;
@@ -26,6 +27,7 @@ boolean lineType;
 int resetTimer;
 int resetFrame;
 boolean twoPlayer;
+ImageIcon logoPic;
  
  MyPanel(boolean players){
   
@@ -37,6 +39,7 @@ boolean twoPlayer;
   ball = new TheBall();
   rightP = new Paddle();
   leftP = new Paddle();
+  logo = new DvdLogo();
   binaryColor = new Color(1, 100, 1);
   lost = false;
   textX = 0;
@@ -51,6 +54,7 @@ boolean twoPlayer;
   move = 0; //0 = not moving, 1 = up, 2 = down
   text = 0;
   lineColor = 0;
+  //logoPic = new ImageIcon("Images/DVDlogo.png");
   binary = new int[25][37];
   for (int i = 0; i < 25; i++) {
     for (int x = 0; x < 37; x++) {
@@ -66,6 +70,7 @@ boolean twoPlayer;
   
   g2D.setPaint(Color.black);
   g2D.fillRect(0, 0, 1300, 800);
+  //g2D.drawImage(logoPic.getImage(), 0, 738, null);
   if (phase > 0) {
     g2D.setPaint(binaryColor);
     g2D.setFont(new Font("Times New Roman",Font.BOLD,100));
@@ -179,6 +184,7 @@ boolean twoPlayer;
  }
   @Override
 	public void actionPerformed(ActionEvent e) {
+    logo.advance();
     if (!lost) {
       ball.advance(leftP.y,rightP.y,phase);//Use paddles later
       if (!twoPlayer) {
