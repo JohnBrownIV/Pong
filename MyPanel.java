@@ -170,7 +170,7 @@ boolean lineType;
         } else if (ball.hits >= 40 && phase == 2) {
           phase = 3;
         }
-        if (phase = 3) {
+        if (phase == 3) {
           if (lineType) {
             lineType = false;
           } else {
