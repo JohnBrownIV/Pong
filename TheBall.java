@@ -12,6 +12,7 @@ public class TheBall {
   ArrayList<Integer> bounceX;
   ArrayList<Integer> bounceY;
   boolean whichSpeed;
+  int ran;
 
   TheBall() {
     bounceX = new ArrayList<Integer>();
@@ -71,23 +72,31 @@ public class TheBall {
       x += speed;
     }
     if (increase <= 0) {
-      if ((int) (Math.random() * 2) == 0) { //whichSpeed if doing old way
+      ran = (int) (Math.random() * 3);
+      if (ran == 0) { //whichSpeed if doing old way
         speed++;
-        vertSpeed--;
-      } else {
+      } else if (ran == 1) {
         vertSpeed++;
-        speed--;
-      }
-      if (speed > 5) {
-        whichSpeed = false;
-      } else if (vertSpeed > 5) {
-        whichSpeed = true;
+      } else if (ran == 2) {
+        if ((int) (Math.random() * 2) == 0) {
+          if (hits < 60) {
+            speed--;
+          } else {
+            vertSpeed++;
+          }
+        } else {
+          if (hits < 60) {
+            vertSpeed--;
+          } else {
+            vertSpeed++;
+          }
+        }
       }
       if (speed < 2) {
-        speed = 2;
+        speed = 3;
       }
       if (vertSpeed < 2) {
-        vertSpeed = 2;
+        vertSpeed = 3;
       }
       increase = 5;
     }
