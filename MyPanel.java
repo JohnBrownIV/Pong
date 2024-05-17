@@ -33,7 +33,7 @@ int lineColor;
   lost = false;
   textX = 0;
   textY = 0;
-  phase = 2;
+  phase = 0;
   message = 0;
   move = 0; //0 = not moving, 1 = up, 2 = down
   text = 0;

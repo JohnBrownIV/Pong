@@ -5,7 +5,6 @@ public class TheBall {
   int speed;
   int vertSpeed;
   int increase;
-  int lastIncrease;
   boolean up;
   boolean left;
   int hits;
@@ -22,7 +21,6 @@ public class TheBall {
     speed = 2;
     vertSpeed = 2;
     increase = 1;
-    lastIncrease = 0;
     whichSpeed = true;
     if (y < 400) {
       up = false;
@@ -58,9 +56,9 @@ public class TheBall {
         beenHit = true;
       }
     }
-    if (beenHit && phase > 1) {
-      bounceX.add(x);
-      bounceY.add(y);
+    if (beenHit && phase > 0) {
+      bounceX.add(x + 5);
+      bounceY.add(y + 5);
     }
     if (up) {
       y -= vertSpeed;
@@ -73,7 +71,7 @@ public class TheBall {
       x += speed;
     }
     if (increase <= 0) {
-      if (whichSpeed) {
+      if ((int) (Math.random() * 2) == 0) { //whichSpeed if doing old way
         speed++;
         vertSpeed--;
       } else {
@@ -91,8 +89,7 @@ public class TheBall {
       if (vertSpeed < 2) {
         vertSpeed = 2;
       }
-      increase = lastIncrease + 1;
-      lastIncrease = increase;
+      increase = 5;
     }
   }
 }
