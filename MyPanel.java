@@ -54,13 +54,13 @@ ImageIcon logoPic;
   move = 0; //0 = not moving, 1 = up, 2 = down
   text = 0;
   lineColor = 0;
-  //logoPic = new ImageIcon("Images/DVDlogo.png");
   binary = new int[25][37];
   for (int i = 0; i < 25; i++) {
     for (int x = 0; x < 37; x++) {
       binary[i][x] = 2;
     }
   }
+  logoPic = new ImageIcon("Images/DVDlogo.png");
  }
  
  public void paint(Graphics g) {
@@ -70,7 +70,9 @@ ImageIcon logoPic;
   
   g2D.setPaint(Color.black);
   g2D.fillRect(0, 0, 1300, 800);
-  //g2D.drawImage(logoPic.getImage(), 0, 738, null);
+  if (ball.hits > 29) {
+    g2D.drawImage(logoPic.getImage(), logo.x, logo.y, null);
+  }
   if (phase > 0) {
     g2D.setPaint(binaryColor);
     g2D.setFont(new Font("Times New Roman",Font.BOLD,100));
@@ -100,7 +102,7 @@ ImageIcon logoPic;
     g2D.setStroke(new BasicStroke(5));
     for (int i  = 0; i < ball.bounceX.size(); i ++) {
       //g2D.drawLine(ball.x + 5, ball.y + 5, ball.bounceX.get(i), ball.bounceY.get(i));//Line drawer
-      lineColor = 255 - ((ball.bounceX.size() - i) * 3);
+      lineColor = 255 - ((ball.bounceX.size() - i) * 4);
       if (lineColor <= 0) {
         lineColor = 1;
       }
@@ -184,7 +186,9 @@ ImageIcon logoPic;
  }
   @Override
 	public void actionPerformed(ActionEvent e) {
-    logo.advance();
+    if (ball.hits > 29) {
+      logo.advance();
+    }
     if (!lost) {
       ball.advance(leftP.y,rightP.y,phase);//Use paddles later
       if (!twoPlayer) {
@@ -248,7 +252,7 @@ ImageIcon logoPic;
       for (int i = 0; i < 37; i++) {
         binary[(int) (Math.random() * 25)][i] = (int) (Math.random() * 2);
       } 
-    } else if (phase != 1 && somethingBin) {
+    } else if (ball.hits > 29 && somethingBin) {
       somethingBin = false;
       for (int i = 0; i < 37; i++) {
         binary[(int) (Math.random() * 25)][i] = 2;

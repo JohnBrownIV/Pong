@@ -4,20 +4,20 @@ public class DvdLogo {
   boolean up;
   boolean left;
   DvdLogo() {
-    x = 400;
+    x = 300;
     y = 400;
-    up = true;
+    up = false;
     left = true;
   }
   public void advance() {
     if (x < 0) {
       left = false;
-    } else if (x + 460 > 1300) {
+    } else if (x + 230 > 1300) {
       left = true;
     }
     if (y < 0) {
       up = false;
-    } else if (y + 208 > 800) {
+    } else if (y + 104 > 800) {
       up = true;
     } 
     if (up) {
