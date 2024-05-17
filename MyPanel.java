@@ -18,10 +18,13 @@ int binary[][];
 int binaryUpdate;
 int message;
 int phase;
+int high;
 Color binaryColor;
 int lineColor;
 boolean somethingBin;
 boolean lineType;
+int resetTimer;
+int resetFrame;
 boolean twoPlayer;
  
  MyPanel(boolean players){
@@ -39,9 +42,12 @@ boolean twoPlayer;
   textX = 0;
   textY = 0;
   phase = 0;
+  high = 0;
   somethingBin = true;
+  resetFrame = 5;
   lineType = true;
   message = 0;
+  resetTimer = -5;
   move = 0; //0 = not moving, 1 = up, 2 = down
   text = 0;
   lineColor = 0;
@@ -63,7 +69,7 @@ boolean twoPlayer;
   if (phase > 0) {
     g2D.setPaint(binaryColor);
     g2D.setFont(new Font("Times New Roman",Font.BOLD,100));
-    if (phase == 1 || phase == 2) {
+    if (phase == 1) {
       if (text > 40) {
         g2D.setPaint(Color.red);
         g2D.drawString("John", 480, 400);
@@ -133,15 +139,42 @@ boolean twoPlayer;
   g2D.drawString("PONG",535,50);
   g2D.setFont(new Font("Comic Sans MS",Font.BOLD,15));
   g2D.drawString("SCORE: " + ball.hits,580,67);
-  g2D.drawString("SPEED",683,15);
+  if (high > 0) {
+    g2D.drawString("HIGH: " + high,580,82);
+  }
+  g2D.drawString("SLOPE",683,15);
   g2D.drawString("" + ball.vertSpeed + " / " + ball.speed,685,30);
   g2D.drawString("NEXT: " + ball.increase,683,45);
   if (twoPlayer) {
     g2D.drawString("2 Players",0,15);
   }
   if (lost) {
+    if (resetTimer == -5) {
+      resetTimer = ball.hits;
+      phase = 0;
+      if (ball.hits > high) {
+        high =ball.hits;
+      }
+    }
     g2D.setFont(new Font("Comic Sans MS",Font.BOLD,75));
     g2D.drawString("GAME OVER",425,400);
+    if (resetFrame == 0) {
+      ball.hits--;
+      resetTimer--;
+      resetFrame = 5;
+      if (ball.bounceX.size() > 0) {
+        ball.bounceX.remove(ball.bounceX.size() - 1);
+        ball.bounceY.remove(ball.bounceY.size() - 1);
+      }
+    } else {
+      resetFrame--;
+    }
+    if (resetTimer == 0) {
+      lost = false;
+      phase = 0;
+      resetTimer = -5;
+      ball = new TheBall();
+    }
   }
  }
   @Override
@@ -209,7 +242,7 @@ boolean twoPlayer;
       for (int i = 0; i < 37; i++) {
         binary[(int) (Math.random() * 25)][i] = (int) (Math.random() * 2);
       } 
-    } else if (phase > 1 && somethingBin) {
+    } else if (phase != 1 && somethingBin) {
       somethingBin = false;
       for (int i = 0; i < 37; i++) {
         binary[(int) (Math.random() * 25)][i] = 2;
