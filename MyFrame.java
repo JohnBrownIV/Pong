@@ -6,10 +6,15 @@ import java.io.*;
 public class MyFrame extends JFrame implements KeyListener{
  
  MyPanel panel;
+ boolean twoPlayer;
  
- MyFrame(){
+ MyFrame(int players){
   
-  panel = new MyPanel();
+  twoPlayer = false;
+  if (players == 2) {
+    twoPlayer = true;
+  }
+  panel = new MyPanel(twoPlayer);
   
   this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   
@@ -18,6 +23,8 @@ public class MyFrame extends JFrame implements KeyListener{
   this.setLocationRelativeTo(null);
   this.addKeyListener(this);
   this.setVisible(true);
+  this.toFront();
+  this.requestFocus();
   
  }
  @Override
@@ -26,14 +33,36 @@ public class MyFrame extends JFrame implements KeyListener{
  @Override
 	public void keyPressed(KeyEvent e) {
     //System.out.println(e.getKeyCode());
-    if (e.getKeyCode() == 87) {
-      panel.move = 1;
-    } else if (e.getKeyCode() == 83) {
-      panel.move = 2;
+    if (!twoPlayer) {
+      if (e.getKeyCode() == 87) {
+        panel.move = 1;
+      } else if (e.getKeyCode() == 83) {
+        panel.move = 2;
+      }
+    } else {
+      if (e.getKeyCode() == 38) {
+        panel.move = 1;
+      } else if (e.getKeyCode() == 40) {
+        panel.move = 2;
+      }
+      if (e.getKeyCode() == 87) {
+        panel.move2 = 1;
+      } else if (e.getKeyCode() == 83) {
+        panel.move2 = 2;
+      }
     }
+    
   }
   @Override
 	public void keyReleased(KeyEvent e) {
-    panel.move = 0;
+    if (!twoPlayer) {
+      panel.move = 0;
+    } else {
+      if (e.getKeyCode() == 38 || e.getKeyCode() == 40) {
+        panel.move = 0;
+      } else {
+        panel.move2 = 0;
+      }
+    }
   }
 }

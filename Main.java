@@ -1,10 +1,14 @@
 import java.io.*;
+import java.util.Scanner;
 
 public class Main{
 
  public static void main(String[] args) throws FileNotFoundException {
-   
-  MyFrame frame = new MyFrame();
+  
+  Scanner in = new Scanner(System.in);
+  System.out.println("# of players: ");
+  MyFrame frame = new MyFrame(Integer.parseInt(in.next()));
+  System.out.println("OPEN THE GAME HURRY");
   
  }
 }

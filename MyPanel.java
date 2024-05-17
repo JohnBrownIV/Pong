@@ -9,6 +9,7 @@ TheBall ball;
 Paddle rightP;
 Paddle leftP;
 int move;
+int move2;
 boolean lost;
 int text;
 int textX;
@@ -21,13 +22,15 @@ Color binaryColor;
 int lineColor;
 boolean somethingBin;
 boolean lineType;
+boolean twoPlayer;
  
- MyPanel(){
+ MyPanel(boolean players){
   
   //image = new ImageIcon("sky.png").getImage();
   this.setPreferredSize(new Dimension(1300,800));
   timer = new Timer(5, this);
 	timer.start();
+  twoPlayer = players;
   ball = new TheBall();
   rightP = new Paddle();
   leftP = new Paddle();
@@ -37,6 +40,7 @@ boolean lineType;
   textY = 0;
   phase = 0;
   somethingBin = true;
+  lineType = true;
   message = 0;
   move = 0; //0 = not moving, 1 = up, 2 = down
   text = 0;
@@ -141,16 +145,28 @@ boolean lineType;
 	public void actionPerformed(ActionEvent e) {
     if (!lost) {
       ball.advance(leftP.y,rightP.y,phase);//Use paddles later
-      leftP.advance(ball.y, ball.left,ball.vertSpeed);
-      if (move == 1) {
+      if (!twoPlayer) {
+        leftP.advance(ball.y, ball.left,ball.vertSpeed);
+      }
+      if (move == 1) { //Player 1
         rightP.y -= 4;
       } else if (move == 2) {
         rightP.y += 4;
       }
-      if (rightP.y + 100 > 800) {
+      if (move2 == 1) { //Player 2
+        leftP.y -= 4;
+      } else if (move2 == 2) {
+        leftP.y += 4;
+      }
+      if (rightP.y + 100 > 800) {//Player 1 limiter
           rightP.y = 700;
         } else if (rightP.y < 0) {
           rightP.y = 0;
+      }
+      if (leftP.y + 100 > 800) {//Player 2 limiter
+          leftP.y = 700;
+        } else if (leftP.y < 0) {
+          leftP.y = 0;
       }
       if (ball.beenHit) {
         text = 50;
