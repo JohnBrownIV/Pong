@@ -163,7 +163,7 @@ ImageIcon logoPic;
         high =ball.hits;
       }
     }
-    g2D.setFont(new Font("Comic Sans MS",Font.BOLD,75));
+    g2D.setFont(new Font("Comic Sans MS",Font.BOLD,75)); 
     g2D.drawString("GAME OVER",425,400);
     if (resetFrame == 0) {
       ball.hits--;
