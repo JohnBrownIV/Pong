@@ -20,6 +20,7 @@ int binaryUpdate;
 int message;
 int phase;
 int high;
+int shake;
 Color binaryColor;
 int lineColor;
 boolean somethingBin;
@@ -46,6 +47,7 @@ ImageIcon logoPic;
   textY = 0;
   phase = 0;
   high = 0;
+  shake = 0;
   somethingBin = true;
   resetFrame = 5;
   lineType = true;
@@ -102,27 +104,32 @@ ImageIcon logoPic;
     g2D.setStroke(new BasicStroke(5));
     for (int i  = 0; i < ball.bounceX.size(); i ++) {
       //g2D.drawLine(ball.x + 5, ball.y + 5, ball.bounceX.get(i), ball.bounceY.get(i));//Line drawer
-      lineColor = 255 - ((ball.bounceX.size() - i) * 4);
+      lineColor = 255 - ((ball.bounceX.size() - i) * jitter(4));
       if (lineColor <= 0) {
         lineColor = 1;
       }
-      g2D.setPaint(new Color(255 - lineColor, lineColor, 1));
-      g2D.drawOval(ball.bounceX.get(i) - 10, ball.bounceY.get(i) - 10, 20, 20);
+      g2D.setPaint(new Color((255 - lineColor), lineColor, 1));
+      g2D.drawOval(jitter(ball.bounceX.get(i) - 10), jitter(ball.bounceY.get(i) - 10), 20, 20);
       if (ball.bounceX.size() > 1 && lineType) {
         if (i < ball.bounceX.size() - 1) {
-          g2D.drawLine(ball.bounceX.get(i), ball.bounceY.get(i), ball.bounceX.get(i + 1), ball.bounceY.get(i + 1));
+          g2D.drawLine(jitter(ball.bounceX.get(i)), jitter(ball.bounceY.get(i)), jitter(ball.bounceX.get(i + 1)), jitter(ball.bounceY.get(i + 1)));
         } else {
-          g2D.drawLine(ball.bounceX.get(i), ball.bounceY.get(i), ball.x + 5, ball.y + 5);
+          g2D.drawLine(jitter(ball.bounceX.get(i)), jitter(ball.bounceY.get(i)), jitter(ball.x + 5), jitter(ball.y + 5));
         }
       } else {
-        g2D.drawLine(ball.bounceX.get(i), ball.bounceY.get(i), ball.x + 5, ball.y + 5);
+        g2D.drawLine(jitter(ball.bounceX.get(i)), jitter(ball.bounceY.get(i)), jitter(ball.x + 5), jitter(ball.y + 5));
       }
     }
     //g2D.drawLine(ball.x + 5, ball.y + 5, 0, 0);//Line drawer
-  g2D.setPaint(Color.white);
-  g2D.fillRect(ball.x, ball.y, 10, 10);//Ball
-  g2D.fillRect(1250, rightP.y, 10, 100);//Right paddle
-  g2D.fillRect(50, leftP.y, 10, 100);//Left paddle
+  if (shake > 2) {
+    g2D.setPaint(new Color(((int) (Math.random() * 255)),((int) (Math.random() * 255)),((int) (Math.random() * 255))));
+  } else {
+    g2D.setPaint(Color.white);
+  }
+  g2D.fillRect(jitter(ball.x), jitter(ball.y), 10, 10);//Ball
+  //Right Paddle Jitter
+  g2D.fillRect(jitter(1250), jitter(rightP.y), 10, 100);//Right paddle
+  g2D.fillRect(jitter(50), jitter(leftP.y), 10, 100);//Left paddle
   g2D.setFont(new Font("Comic Sans MS",Font.BOLD,25));
   /*g2D.drawString("X: " + ball.x,5,30);
   g2D.drawString("Y: " + ball.y,5,60);
@@ -159,6 +166,8 @@ ImageIcon logoPic;
     if (resetTimer == -5) {
       resetTimer = ball.hits;
       phase = 0;
+      shake = 0;
+      lineType = true;
       if (ball.hits > high) {
         high =ball.hits;
       }
@@ -261,8 +270,26 @@ ImageIcon logoPic;
             somethingBin = true;
           }
         }
+        if (ball.hits > 15) {
+          shake = 2;
+        } else if (ball.hits > 24) {
+          shake = 4;
+        } else if (ball.hits > 40) {
+          shake = 6;
+        } else if (ball.hits > 50) {
+          shake = 8;
+        }
       }
     }
     repaint();
+  }
+  public int jitter(int in) {
+    int out = in;
+    if ((int) (Math.random() * 2) == 0) { //JITTER START
+     out += (int) (Math.random() * shake);
+    } else {
+      out -= (int) (Math.random() * shake);
+    }
+    return out;
   }
 }
