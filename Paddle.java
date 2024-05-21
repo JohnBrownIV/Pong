@@ -3,8 +3,8 @@ public class Paddle {
   Paddle() {
     y = 350;
   }
-  public void advance(int inY, boolean left, int speed) {
-    if (left) {
+  public void advance(int inY, boolean left, int speed, boolean rightPaddle) {
+    if ((left && !rightPaddle) || (rightPaddle && !left)) {
       if (inY > y + 80) {
       y += speed + 1;
       }

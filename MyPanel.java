@@ -29,6 +29,7 @@ int resetTimer;
 int resetFrame;
 boolean twoPlayer;
 ImageIcon logoPic;
+boolean noPlayer;
  
  MyPanel(boolean players){
   
@@ -47,6 +48,7 @@ ImageIcon logoPic;
   textY = 0;
   phase = 0;
   high = 0;
+  noPlayer = true;
   shake = 0;
   somethingBin = true;
   resetFrame = 5;
@@ -204,7 +206,10 @@ ImageIcon logoPic;
     if (!lost) {
       ball.advance(leftP.y,rightP.y,phase);//Use paddles later
       if (!twoPlayer) {
-        leftP.advance(ball.y, ball.left,ball.vertSpeed);
+        leftP.advance(ball.y, ball.left,ball.vertSpeed,false);
+      }
+      if (noPlayer) {
+        rightP.advance(ball.y, ball.left,ball.vertSpeed,true);
       }
       if (move == 1) { //Player 1
         rightP.y -= 4;
@@ -247,7 +252,9 @@ ImageIcon logoPic;
           phase = 3;
         }
         if (ball.hits > 50) {
-          shake = 8;
+          if (ball.hits % 10 == 0) {
+            shake += 2;
+          }
         } else if (ball.hits > 40) {
           shake = 6;
         } else if (ball.hits > 24) {
