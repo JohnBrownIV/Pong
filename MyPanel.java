@@ -69,12 +69,8 @@ ImageIcon logoPic;
   
   Graphics2D g2D = (Graphics2D) g;
 
-  
-  if (ball.hits > 34) {
-    g2D.setPaint(new Color(((int) (Math.random() * 255)),((int) (Math.random() * 255)),((int) (Math.random() * 255))));//EPILEPSEY WARNING. REPLEACE THIS STATEMENT WITH "g2D.setPaint(Color.black);" TO REMOVE HAZARD
-  } else {
-    g2D.setPaint(Color.black);
-  }
+  g2D.setPaint(Color.black);
+
   g2D.fillRect(0, 0, 1300, 800);
   if (ball.hits > 29) {
     g2D.drawImage(logoPic.getImage(), logo.x, logo.y, null);
