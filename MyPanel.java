@@ -70,7 +70,11 @@ ImageIcon logoPic;
   Graphics2D g2D = (Graphics2D) g;
 
   
-  g2D.setPaint(Color.black);
+  if (ball.hits > 34) {
+    g2D.setPaint(new Color(((int) (Math.random() * 255)),((int) (Math.random() * 255)),((int) (Math.random() * 255))));//EPILEPSEY WARNING. REPLEACE THIS STATEMENT WITH "g2D.setPaint(Color.black);" TO REMOVE HAZARD
+  } else {
+    g2D.setPaint(Color.black);
+  }
   g2D.fillRect(0, 0, 1300, 800);
   if (ball.hits > 29) {
     g2D.drawImage(logoPic.getImage(), logo.x, logo.y, null);
@@ -94,7 +98,7 @@ ImageIcon logoPic;
     for (int i = 0; i < 25; i++) {
       for (int x = 0; x < 37; x++) {
         if (binary[i][x] != 2) {
-          g2D.drawString("" + binary[i][x],(35 * x) + 9,35 * i);
+          g2D.drawString("" + binary[i][x],jitter((35 * x) + 9),jitter(35 * i));
         }
       }
     }
@@ -107,6 +111,9 @@ ImageIcon logoPic;
       lineColor = 255 - ((ball.bounceX.size() - i) * jitter(4));
       if (lineColor <= 0) {
         lineColor = 1;
+      }
+      if (lineColor >= 255) {
+        lineColor = 254;
       }
       g2D.setPaint(new Color((255 - lineColor), lineColor, 1));
       g2D.drawOval(jitter(ball.bounceX.get(i) - 10), jitter(ball.bounceY.get(i) - 10), 20, 20);
@@ -243,12 +250,14 @@ ImageIcon logoPic;
         } else if (ball.hits >= 40 && phase == 2) {
           phase = 3;
         }
-        if (phase == 3) {
-          if (lineType) {
-            lineType = false;
-          } else {
-            lineType = true;
-          }
+        if (ball.hits > 50) {
+          shake = 8;
+        } else if (ball.hits > 40) {
+          shake = 6;
+        } else if (ball.hits > 24) {
+          shake = 4;
+        } else if (ball.hits > 15) {
+          shake = 2;
         }
       }
     }
@@ -270,15 +279,7 @@ ImageIcon logoPic;
             somethingBin = true;
           }
         }
-        if (ball.hits > 15) {
-          shake = 2;
-        } else if (ball.hits > 24) {
-          shake = 4;
-        } else if (ball.hits > 40) {
-          shake = 6;
-        } else if (ball.hits > 50) {
-          shake = 8;
-        }
+        
       }
     }
     repaint();
