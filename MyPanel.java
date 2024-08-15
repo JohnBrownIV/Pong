@@ -48,7 +48,7 @@ boolean noPlayer;
   textY = 0;
   phase = 0;
   high = 0;
-  noPlayer = true;
+  noPlayer = false;
   shake = 0;
   somethingBin = true;
   resetFrame = 5;
