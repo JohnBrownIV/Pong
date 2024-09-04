@@ -174,7 +174,7 @@ boolean noPlayer;
       shake = 0;
       lineType = true;
       if (ball.hits > high) {
-        high =ball.hits;
+        high = ball.hits;
       }
     }
     g2D.setFont(new Font("Comic Sans MS",Font.BOLD,75)); 
@@ -184,6 +184,8 @@ boolean noPlayer;
       resetTimer--;
       resetFrame = 5;
       if (ball.bounceX.size() > 0) {
+        ball.bounceX.remove(ball.bounceX.size() - 1);
+        ball.bounceY.remove(ball.bounceY.size() - 1);
         ball.bounceX.remove(ball.bounceX.size() - 1);
         ball.bounceY.remove(ball.bounceY.size() - 1);
       }
