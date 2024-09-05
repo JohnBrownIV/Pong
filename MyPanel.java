@@ -48,7 +48,7 @@ boolean noPlayer;
   textY = 0;
   phase = 0;
   high = 0;
-  noPlayer = false;
+  noPlayer = true;
   shake = 0;
   somethingBin = true;
   resetFrame = 5;
@@ -71,7 +71,11 @@ boolean noPlayer;
   
   Graphics2D g2D = (Graphics2D) g;
 
-  g2D.setPaint(Color.black);
+  if (lineType) {
+    g2D.setPaint(Color.black);
+  } else {
+    g2D.setPaint(new Color(((int) (Math.random() * 255)),((int) (Math.random() * 255)),((int) (Math.random() * 255))));
+  }
 
   g2D.fillRect(0, 0, 1300, 800);
   if (ball.hits > 29) {
@@ -113,7 +117,11 @@ boolean noPlayer;
       if (lineColor >= 255) {
         lineColor = 254;
       }
-      g2D.setPaint(new Color((255 - lineColor), lineColor, 1));
+      if (ball.hits < 40) {
+        g2D.setPaint(new Color((255 - lineColor), lineColor, 1));
+      } else {
+        g2D.setPaint(new Color(((int) (Math.random() * 255)),((int) (Math.random() * 255)),((int) (Math.random() * 255))));
+      }
       g2D.drawOval(jitter(ball.bounceX.get(i) - 10), jitter(ball.bounceY.get(i) - 10), 20, 20);
       if (ball.bounceX.size() > 1 && lineType) {
         if (i < ball.bounceX.size() - 1) {
@@ -121,8 +129,6 @@ boolean noPlayer;
         } else {
           g2D.drawLine(jitter(ball.bounceX.get(i)), jitter(ball.bounceY.get(i)), jitter(ball.x + 5), jitter(ball.y + 5));
         }
-      } else {
-        g2D.drawLine(jitter(ball.bounceX.get(i)), jitter(ball.bounceY.get(i)), jitter(ball.x + 5), jitter(ball.y + 5));
       }
     }
     //g2D.drawLine(ball.x + 5, ball.y + 5, 0, 0);//Line drawer
