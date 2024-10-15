@@ -30,6 +30,7 @@ int resetFrame;
 boolean twoPlayer;
 ImageIcon logoPic;
 boolean noPlayer;
+String stupid = ""; //Plink/Plonk
  
  MyPanel(boolean players){
   
@@ -48,7 +49,7 @@ boolean noPlayer;
   textY = 0;
   phase = 0;
   high = 0;
-  noPlayer = true;
+  noPlayer = false;
   shake = 0;
   somethingBin = true;
   resetFrame = 5;
@@ -144,8 +145,11 @@ boolean noPlayer;
   g2D.drawString("Speed: " + ball.speed,5,180);
   g2D.drawString("Increase: " + ball.increase,5,210);
   g2D.drawString("move: " + move,5,240);*/
+  if (text == 50) {
+    stupid = new String[]{"plonk", "plink", "plank", "rizz", "plonk", "ow", "that hurt", "die", "I HATE YOU", "plonk", "plink","plinkity plonk"}[(int) (Math.random() * 12)];
+  }
   if (text > 0) {
-    g2D.drawString("plonk",textX,textY);
+    g2D.drawString(stupid,textX,textY);
     text--;
     if (ball.left) {
       textX--;
@@ -204,7 +208,7 @@ boolean noPlayer;
       logo.advance();
     }
     if (!lost) {
-      ball.advance(leftP.y,rightP.y,phase);//Use paddles later
+      ball.advance(leftP.y,rightP.y,phase,move,move2);//Use paddles later
       if (!twoPlayer) {
         leftP.advance(ball.y, ball.left,ball.vertSpeed,false);
       }

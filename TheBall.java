@@ -32,18 +32,11 @@ public class TheBall {
     hits = 0;
     beenHit = false;
   }
-  public void advance(int leftP, int rightP, int phase) { //left and right are paddle coordinates
+  public void advance(int leftP, int rightP, int phase, int move1, int move2) { //left and right are paddle coordinates
+    boolean paddled = false;
     if (y + 10 > 800 && !up) {
       up = true;
       beenHit = true;
-    }
-    if (x + 10 > 1250 && !left) {//right Check
-      if (y > rightP && y < rightP + 100) {
-        left = true;
-        hits++;
-        increase--;
-        beenHit = true;
-      }
     }
     if (y < 0 && up) {
       up = false;
@@ -55,6 +48,26 @@ public class TheBall {
         hits++;
         increase--;
         beenHit = true;
+        paddled = true;
+        if (move1 == -1) {
+          up = false;
+        } else if (move1 == 1) {
+          up = true;
+        }
+      }
+    }
+    if (x + 10 > 1250 && !left) {//right Check
+      if (y > rightP && y < rightP + 100) {
+        left = true;
+        hits++;
+        increase--;
+        beenHit = true;
+        paddled = true;
+        if (move2 == -1) {
+          up = false;
+        } else if (move2 == 1) {
+          up = true;
+        }
       }
     }
     if (beenHit && phase > 0) {
