@@ -43,9 +43,9 @@ public class MyFrame extends JFrame implements KeyListener{
       }
     }
     if (!twoPlayer) {
-      if (e.getKeyCode() == 87) {
+      if (e.getKeyCode() == 38) {
         panel.move = 1;
-      } else if (e.getKeyCode() == 83) {
+      } else if (e.getKeyCode() == 40) {
         panel.move = 2;
       }
     } else {
