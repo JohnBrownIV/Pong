@@ -84,7 +84,7 @@ public class TheBall {
     } else {
       x += speed;
     }
-    if (increase <= 0) {
+    if (beenHit) {
       ran = (int) (Math.random() * 3);
       if (ran == 0) { //whichSpeed if doing old way
         speed++;

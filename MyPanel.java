@@ -121,7 +121,6 @@ String stupid = ""; //Plink/Plonk
       ball.bounceX.set(i,jitter(ball.bounceX.get(i)));
       ball.bounceY.set(i,jitter(ball.bounceY.get(i)));
       g2D.setPaint(new Color((255 - lineColor), lineColor, 1));
-      g2D.drawOval(jitter(ball.bounceX.get(i) - 10), jitter(ball.bounceY.get(i) - 10), 20, 20);
       if (ball.bounceX.size() > 1 && lineType) {
         if (i < ball.bounceX.size() - 1) {
           g2D.drawLine(ball.bounceX.get(i), ball.bounceY.get(i), ball.bounceX.get(i + 1), ball.bounceY.get(i + 1));
