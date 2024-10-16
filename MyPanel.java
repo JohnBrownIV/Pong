@@ -25,6 +25,7 @@ Color binaryColor;
 int lineColor;
 boolean somethingBin;
 boolean lineType;
+boolean shaking;
 int resetTimer;
 int resetFrame;
 boolean twoPlayer;
@@ -55,6 +56,7 @@ String stupid = ""; //Plink/Plonk
     ball.vertSpeed = 5;
   }
   shake = 0;
+  shaking = true;
   somethingBin = true;
   resetFrame = 5;
   lineType = true;
@@ -262,6 +264,11 @@ String stupid = ""; //Plink/Plonk
         } else if (ball.hits >= 40 && phase == 2) {
           phase = 3;
         }
+        if (ball.hits > 20 && ball.hits % 2 == 0) {
+          shaking = true;
+        } else if (ball.hits > 20) {
+            shaking = false;
+          }
         if (ball.hits > 50) {
           if (ball.hits % 10 == 0) {
             shake += 2;
@@ -300,10 +307,12 @@ String stupid = ""; //Plink/Plonk
   }
   public int jitter(int in) {
     int out = in;
-    if ((int) (Math.random() * 2) == 0) { //JITTER START
-     out += (int) (Math.random() * shake);
-    } else {
-      out -= (int) (Math.random() * shake);
+    if (shaking) {
+      if ((int) (Math.random() * 2) == 0) { //JITTER START
+        out += (int) (Math.random() * shake);
+       } else {
+         out -= (int) (Math.random() * shake);
+       }
     }
     return out;
   }
