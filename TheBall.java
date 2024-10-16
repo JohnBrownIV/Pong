@@ -85,25 +85,15 @@ public class TheBall {
       x += speed;
     }
     if (beenHit) {
-      ran = (int) (Math.random() * 3);
+      ran = (int) (Math.random() * 4);
       if (ran == 0) { //whichSpeed if doing old way
         speed++;
       } else if (ran == 1) {
         vertSpeed++;
       } else if (ran == 2) {
-        if ((int) (Math.random() * 2) == 0) {
-          if (hits < 60) {
-            speed--;
-          } else {
-            vertSpeed++;
-          }
-        } else {
-          if (hits < 60) {
-            vertSpeed--;
-          } else {
-            vertSpeed++;
-          }
-        }
+        speed--;
+      } else {
+        vertSpeed--;
       }
       if (speed < 2) {
         speed = 3;
